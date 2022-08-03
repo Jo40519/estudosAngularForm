@@ -6,12 +6,14 @@ import { AppComponent } from './app.component';
 import { TemplateFormComponent } from './template-form/template-form.component';
 import { DataFormtComponent } from './data-formt/data-formt.component';
 import { FormsModule } from '@angular/forms';
+import { FormDebugComponent } from './formDebug/formDebug.component';
 
 @NgModule({
-  declarations: [
+  declarations: [	
     AppComponent,
       TemplateFormComponent,
-      DataFormtComponent
+      DataFormtComponent,
+      FormDebugComponent
    ],
   imports: [
     BrowserModule,
