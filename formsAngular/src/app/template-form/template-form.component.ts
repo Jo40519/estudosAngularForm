@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-template-form',
@@ -13,7 +15,7 @@ export class TemplateFormComponent implements OnInit {
     email: null
   }
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   ngOnInit() {
   }
@@ -23,5 +25,21 @@ export class TemplateFormComponent implements OnInit {
     console.log(form)
 
     console.log(this.usuario)
+  }
+
+  consultaCEP(cep: any) {
+   cep = cep.replace(/\D/g, '')
+
+   if(cep != "") {
+    let validaCep = /^[0-9]{8}$/;
+
+    if(validaCep.test(cep)) {
+        this.http.get(`https://viacep.com.br/ws/${cep}/json`).pipe(map((dados) => dados)).subscribe((dados) => console.log(dados))
+    }
+   }
+  }
+
+  populaDadosForm() {
+    
   }
 }
