@@ -5,22 +5,22 @@ import { HttpClientModule } from '@angular/common/http'
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TemplateFormComponent } from './template-form/template-form.component';
-import { DataFormtComponent } from './data-formt/data-formt.component';
 import { FormsModule } from '@angular/forms';
-import { FormDebugComponent } from './formDebug/formDebug.component';
+import { FormDebugComponent } from './shared/formDebug/formDebug.component';
+import { DataFormtModule } from './data-formt/data-formt.module';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-      TemplateFormComponent,
-      DataFormtComponent,
-      FormDebugComponent
+    TemplateFormComponent,
    ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent]

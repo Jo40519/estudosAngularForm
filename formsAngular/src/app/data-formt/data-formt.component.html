@@ -1,3 +1,49 @@
-<p>
-  data-formt works!
-</p>
+<form [formGroup]="formulario" (ngSubmit)="submit()">
+  <div class="form-group row">
+    <div class="col-sm-12">
+      <label for="nome">Nome</label>
+    </div>
+
+    <div class="col-sm-12" [ngClass]="appCssError('nome')">
+      <input
+        class="form-control"
+        id="nome"
+        aria-describedby="emailHelp"
+        formControlName="nome"
+        required
+      />
+      <app-campo-control-error
+      [mostrarErro]="!formulario.get('nome')?.value && !!formulario.get('nome')?.touched"
+      msgErro="Nome é obrigatório.">
+    </app-campo-control-error>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-12">
+      <label for="email">Email</label>
+    </div>
+
+    <div class="col-sm-12">
+      <input
+        type="email"
+        class="form-control"
+        id="email"
+        formControlName="email"
+        required
+      />
+      <app-campo-control-error
+      [mostrarErro]="!formulario.get('email')?.value && !!formulario.get('email')?.touched"
+      msgErro="Email é obrigatório.">
+    </app-campo-control-error>
+      <app-campo-control-error
+      [mostrarErro]="verificaEmailInvalido()"
+      msgErro="Email é inválido.">
+    </app-campo-control-error>
+    </div>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+  <button type="submit" class="btn" (click)="reset()">Cancel</button>
+
+  <app-formDebug [form]="formulario"></app-formDebug>
+</form>
