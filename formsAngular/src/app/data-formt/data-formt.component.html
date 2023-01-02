@@ -19,7 +19,7 @@
     </div>
   </div>
 
-  <div class="form-group row">
+  <div class="form-group row" [ngClass]="appCssError('email')">
     <div class="col-sm-12">
       <label for="email">Email</label>
     </div>
@@ -42,8 +42,173 @@
     </app-campo-control-error>
     </div>
   </div>
+
+  <div formGroupName="endereco" >
+
+    <div class="form-group row">
+      <div class="col-md-3"
+      [ngClass]="appCssError('endereco.cep')"
+      >
+        <label for="cep" class="control-label">CEP</label>
+        <input type="text" class="form-control" id="cep" name="cep" formControlName="cep" (blur)="consultaCEP()">
+        <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+        <app-campo-control-error
+        [mostrarErro]="!formulario.get('endereco.cep')?.value && !!formulario.get('endereco.cep')?.touched"
+        msgErro="CEP é obrigatório.">
+      </app-campo-control-error>
+        <app-campo-control-error
+        [mostrarErro]="formulario.get('endereco.cep')?.hasError('cepInvalido')"
+        msgErro="CEP é inválido">
+      </app-campo-control-error>
+      </div>
+      <div class="col-md-3"
+      [ngClass]="appCssError('endereco.numero')"
+      >
+        <label for="numero" class="control-label">Número</label>
+        <input type="text" class="form-control" id="numero" name="numero" formControlName="numero">
+        <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+        <app-campo-control-error
+        [mostrarErro]="!formulario.get('endereco.numero')?.value && !!formulario.get('endereco.numero')?.touched"
+        msgErro="Número é obrigatório.">
+      </app-campo-control-error>
+      </div>
+
+      <div class="col-md-6"
+      >
+        <label for="complemento" class="control-label">Complemento</label>
+        <input formControlName="complemento" type="text" class="form-control" id="complemento" name="complemento">
+      </div>
+  </div>
+
+  <div class="form-group row" [ngClass]="appCssError('endereco.rua')">
+    <div class="col-sm-12">
+      <label for="rua">Rua</label>
+    </div>
+
+    <div class="col-sm-12">
+      <input
+      formControlName="rua"
+      class="form-control"
+      id="rua"
+      aria-describedby="emailHelp"
+      name="rua">
+      <app-campo-control-error
+      [mostrarErro]="!formulario.get('endereco.rua')?.value && !!formulario.get('endereco.rua')?.touched"
+      msgErro="Rua é obrigatório.">
+    </app-campo-control-error>
+  </div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-md-5"
+    [ngClass]="appCssError('endereco.bairro')"
+    >
+      <label for="bairro" class="control-label">Bairro</label>
+      <input formControlName="bairro" type="text" class="form-control" id="bairro" name="bairro">
+      <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+      <app-campo-control-error
+      [mostrarErro]="!formulario.get('endereco.bairro')?.value && !!formulario.get('endereco.bairro')?.touched"
+      msgErro="Bairro é obrigatório.">
+    </app-campo-control-error>
+    </div>
+    <div class="col-md-4"
+    [ngClass]="appCssError('endereco.cidade')"
+    >
+      <label for="cidade" class="control-label">Cidade</label>
+      <input formControlName="cidade" type="text" class="form-control" id="cidade" name="cidade">
+      <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+      <app-campo-control-error
+      [mostrarErro]="!formulario.get('endereco.cidade')?.value && !!formulario.get('endereco.cidade')?.touched"
+      msgErro="Cidade é obrigatório.">
+    </app-campo-control-error>
+    </div>
+
+    <div class="col-md-3"
+    [ngClass]="appCssError('endereco.estado')"
+    >
+      <label for="estado" class="control-label">Estado</label>
+      <select class="form-control" formControlName="estado">
+        <option [value]="estados.sigla"  *ngFor="let estados of listaEstadosBr | async">{{estados.sigla}} - {{estados.nome}}</option>
+      </select>
+      <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+      <app-campo-control-error
+      [mostrarErro]="!formulario.get('endereco.estado')?.value && !!formulario.get('endereco.estado')?.touched"
+      msgErro="Estado é obrigatório.">
+    </app-campo-control-error>
+    </div>
+  </div>
+
+
+</div>
+<div class="form-group row">
+  <div class="col-md-3"
+  [ngClass]="appCssError('cargos')"
+  >
+    <label for="cargos" class="control-label">cargo</label>
+    <select [compareWith]="compararCargos" class="form-control" formControlName="cargos">
+      <option [ngValue]="cargos"  *ngFor="let cargos of cargos">{{cargos.desc}}</option>
+    </select>
+  </div>
+  <div class="col-md-3"
+  [ngClass]="appCssError('cargos')"
+  >
+    <label for="cargos" class="control-label">Tecnologias</label>
+    <select multiple class="form-control" formControlName="tecnologias">
+      <option [value]="tecno.nome" *ngFor="let tecno of tec">{{tecno.desc}}</option>
+    </select>
+  </div>
+
+  <div class="col-md-3"
+  [ngClass]="appCssError('newsletter')"
+  >
+    <label for="newsletter" class="control-label">Newsletter</label>
+    <div id="newsletter" class="row">
+      <div class="col-sm-4" *ngFor="let item of newLetterOp">
+        <label for="" class="radio-inline">
+          <input [value]="item.valor" type="radio" formControlName="newsletter"> {{item.desc}}
+        </label>
+
+      </div>
+    </div>
+    <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+  </div>
+</div>
+
+<div class="form-roup row">
+  <div class="col-md3"  [ngClass]="appCssError('termos')">
+    <div class="checkbox">
+      <label class="checkbox-inline">
+        <input type="checkbox" formControlName="termos"> Aceitar Termos de Usos
+      </label>
+    </div>
+    <app-campo-control-error
+      [mostrarErro]="!formulario.get('termos')?.value && !!formulario.get('termos')?.touched"
+      msgErro="Por favor, aceite os termos.">
+    </app-campo-control-error>
+  </div>
+</div>
+
+<div class="form-group row">
+  <div class="col-md3"  [ngClass]="appCssError('frameworks')">
+    <label for="frameworks">Frameworks</label>
+    <div id="frameworks" class="row">
+
+      <div class="checkbox" class="col-sm-4" formArrayName="frameworks" *ngFor="let frame of getFrameworksControl(); let i = index">
+        <label class="checkbox-inline">
+          <input type="checkbox" [formControlName]="i"> {{frameworks[i]}}
+        </label>
+      </div>
+    </div>
+  </div>
+  <app-campo-control-error
+    [mostrarErro]="!formulario.get('frameworks')?.value"
+    msgErro="Selecione 1 Opção">
+  </app-campo-control-error>
+</div>
   <button type="submit" class="btn btn-primary">Submit</button>
-  <button type="submit" class="btn" (click)="reset()">Cancel</button>
+  <button type="button" class="btn" (click)="reset()">Cancel</button>
+  <button type="button" class="btn" (click)="setarCargo()">Setar Cargo</button>
+  <button type="button" class="btn" (click)="setarTecnologia()">Setar Tecnologia</button>
 
   <app-formDebug [form]="formulario"></app-formDebug>
 </form>
